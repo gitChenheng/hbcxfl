@@ -2,6 +2,7 @@ import fs from "fs";
 import Router from "koa-router";
 import {CTRL, GET, POST, Controller} from "@/constans/decorator";
 import {verbDescriptors} from "@/decorators/action";
+import config from "@/config/config";
 
 const baseDescriptors = [
     "length",
@@ -49,25 +50,28 @@ initRoute();
 
 //views
 router.get('/', async (ctx) =>{
-    await ctx.render('index', {title: '湖北驰迅法律咨询服务有限公司'})
+    await ctx.render('index', {prefix: config.prefix})
 })
 router.get('/us', async (ctx) =>{
-    await ctx.render('us', {title: 'index'})
+    await ctx.render('us', {prefix: config.prefix})
 })
 router.get('/infos', async (ctx) =>{
-    await ctx.render('infos', {title: 'index'})
+    await ctx.render('infos', {prefix: config.prefix})
 })
 router.get('/service', async (ctx) =>{
-    await ctx.render('service', {title: 'index'})
+    await ctx.render('service', {prefix: config.prefix})
 })
 router.get('/coorp', async (ctx) =>{
-    await ctx.render('coorp', {title: 'index'})
+    await ctx.render('coorp', {prefix: config.prefix})
 })
 router.get('/black', async (ctx) =>{
-    await ctx.render('black', {title: 'index'})
+    await ctx.render('black', {prefix: config.prefix})
 })
 router.get('/contact', async (ctx) =>{
-    await ctx.render('contact', {title: 'index'})
+    await ctx.render('contact', {prefix: config.prefix})
+})
+router.get('/admin', async (ctx) =>{
+    await ctx.render('admin', {prefix: config.prefix})
 })
 
 export default router;

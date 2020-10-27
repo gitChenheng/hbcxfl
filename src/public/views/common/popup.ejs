@@ -57,6 +57,7 @@
     </div>
 </div>
 <script>
+    var prefix='<%=prefix%>';
     $('#min').click(function () {
         if($('#popup').height()===380){
             $('#popup').css('height',35);
@@ -88,7 +89,7 @@
             return;
         }
         $.ajax({
-            url:'https://www.denominator.online:9000/api/customer/addCustomer',
+            url:prefix+'/api/customer/addCustomer',
             type:'post',
             timeout:10000,
             dataType:'json',
@@ -112,18 +113,5 @@
                 console.log(e)
             }
         })
-    })
-    $.ajax({
-        url:'https://www.denominator.online:9000/api/customer/getAllCustomers',
-        type:'post',
-        timeout:10000,
-        dataType:'json',
-        contentType:'application/json',
-        success:function (d) {
-            console.log(d)
-        },
-        fail:function (e) {
-            console.log(e)
-        }
     })
 </script>

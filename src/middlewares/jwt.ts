@@ -9,7 +9,12 @@ export const sign = (obj) => {
 }
 
 export const urlJudge = (request_url) => {
-    return !!whiteList.includes(request_url);
+    if(request_url.indexOf('?')>-1){
+        const final_request_url = request_url.split('?')[0];
+        return !!whiteList.includes(final_request_url);
+    }else{
+        return !!whiteList.includes(request_url);
+    }
 }
 
 export const verify = () => {

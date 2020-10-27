@@ -5,7 +5,8 @@ import {CommonExcludeAttributes} from "@/constans/global";
 
 export const getAllCustomer = async () => {
     return await Customer.findAll({
-        attributes: {exclude: [...CommonExcludeAttributes]},
+        // attributes: {exclude: [...CommonExcludeAttributes]},
+        order: [['created_at','DESC']],
         raw: true,
     });
 }

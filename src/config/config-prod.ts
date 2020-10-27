@@ -1,4 +1,5 @@
 export default {
+    prefix: "https://www.denominator.online:9000",
     node: {
         host: "49.234.113.173",
         port: 9000,

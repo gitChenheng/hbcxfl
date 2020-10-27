@@ -1,0 +1,77 @@
+<%-include ('common/header.ejs')-%>
+<table id="tb"></table>
+<script>
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return false;
+    }
+    var token=getQueryVariable('token');
+    var prefix='<%=prefix%>';
+    function dateFormat(fmt, date) {
+        let ret;
+        const opt = {
+            "Y+": date.getFullYear().toString(),        // 年
+            "m+": (date.getMonth() + 1).toString(),     // 月
+            "d+": date.getDate().toString(),            // 日
+            "H+": date.getHours().toString(),           // 时
+            "M+": date.getMinutes().toString(),         // 分
+            "S+": date.getSeconds().toString()          // 秒
+            // 有其他格式化字符需求可以继续添加，必须转化成字符串
+        };
+        for (let k in opt) {
+            ret = new RegExp("(" + k + ")").exec(fmt);
+            if (ret) {
+                fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+            };
+        };
+        return fmt;
+    }
+    $.ajax({
+        url:prefix+'/api/customer/getAllCustomers',
+        type:'post',
+        timeout:10000,
+        dataType:'json',
+        contentType:'application/json',
+        data:JSON.stringify({token}),
+        success:function (d) {
+            // console.log(d)
+            if(d.code==='1'){
+                var r = d.data;
+                var html='';
+                for (var i=0;i<r.length;i++){
+                    html+='<tr>\n' +
+                        '        <td>'+r[i].name+'</td>\n' +
+                        '        <td>'+r[i].phone+'</td>\n' +
+                        '        <td>'+r[i].money+'</td>\n' +
+                        '        <td>'+r[i].platform+'</td>\n' +
+                        '        <td>'+r[i].content+'</td>\n' +
+                        '        <td>'+dateFormat("YYYY-mm-dd HH:MM", new Date(r[i].created_at))+'</td>\n' +
+                        '    </tr>';
+                }
+                $('#tb').html('<thead>\n' +
+                    '    <tr>\n' +
+                    '        <td>名称</td>\n' +
+                    '        <td>手机号</td>\n' +
+                    '        <td>受损金额</td>\n' +
+                    '        <td>受损平台</td>\n' +
+                    '        <td style="max-width: 500px">留言</td>\n' +
+                    '        <td>创建时间</td>\n' +
+                    '    </tr>\n' +
+                    '    </thead>\n' +
+                    '    <tbody>\n' + html +
+                    '    </tbody>')
+            }else{
+                alert(d.msg)
+            }
+        },
+        fail:function (e) {
+            alert('网络请求异常')
+            console.log(e)
+        }
+    })
+</script>

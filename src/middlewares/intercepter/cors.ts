@@ -1,4 +1,5 @@
 import {ENV_PROD} from "@/constans/global";
+import config from "@/config/config";
 
 export default () => {
     return async (ctx, next) => {
@@ -7,7 +8,7 @@ export default () => {
         // } else {
         //     ctx.set("Access-Control-Allow-Origin", "*");
         // }
-        ctx.set("Access-Control-Allow-Origin", "https://www.denominator.online:9000");
+        ctx.set("Access-Control-Allow-Origin", config.prefix);
         ctx.set("Access-Control-Allow-Credentials", "false");
         ctx.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE,PUT");
         ctx.set("Access-Control-Allow-Headers", "Content-Type,Authorization,Accept,token,x-requested-with");

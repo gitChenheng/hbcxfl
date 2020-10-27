@@ -6,6 +6,7 @@ export default [
     "/coorp",
     "/black",
     "/contact",
+    "/admin",
     "/api/customer/getAllCustomers",
     "/api/customer/addCustomer",
 
