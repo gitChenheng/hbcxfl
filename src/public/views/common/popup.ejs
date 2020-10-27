@@ -1,0 +1,129 @@
+<div id="popup" style="position:fixed;bottom: 0;right: 0;z-index:99;width:240px;height: 380px; background: #ededed;border-radius: 3px 3px 0 3px;overflow: hidden">
+    <div style="display: flex;justify-content: space-between;background: #5882ED url(./img/boardTop4.png) no-repeat;">
+        <span style="font-size: 14px;color: #fff;margin-left: 12px;line-height: 35px;">请您留言</span>
+        <span id="min" style="display: inline-block;float: right;height: 30px;width: 34px;
+        margin-top: 2px;cursor: pointer; background: transparent url(./img/nodeMin.png) no-repeat;"></span>
+    </div>
+    <div id="popupBottom">
+        <div>
+            <div style="font-size: 14px;
+    background-color: transparent;
+    color: #666;
+    word-break: break-all;
+    line-height: 18px;
+    padding: 10px 15px;
+    border-bottom: 1px solid #d5d5d5;">湖北驰迅法律咨询服务有限公司</div>
+        </div>
+        <p style="background-color: transparent; color: #999;"></p>
+        <form id="form">
+            <div style="display: block;text-align: center">
+            <textarea
+                    id="popupcontent"
+                    style="font-size: 12px;resize: none;width: 212px;height: 79px;margin: 12px auto 0;
+                        border: 1px solid #d5d5d5;background-color: #fff;color: #3f4461;padding: 3px"
+                    name="content" data-ph="请在此输入留言内容，我们会尽快与您联系。（必填）"
+                    placeholder="请在此输入留言内容，我们会尽快与您联系。（必填）" maxlength="100"
+            ></textarea>
+                <div class="popup_ins">
+                    <span style="background: #fff url(./img/user.png) no-repeat 9px center;"></span>
+                    <input id="popupname" data-write="0" name="visitorName" maxlength="10" type="text" data-ph="姓名" placeholder="姓名">
+                </div>
+                <div class="popup_ins">
+                    <span style="background: #fff url(./img/nodephone.png) no-repeat 9px center;"></span>
+                    <input id="popupphone" name="visitorPhone" maxlength="11" data-write="1" type="text" data-ph="电话（必填）" placeholder="电话（必填）">
+                </div>
+                <div class="popup_ins">
+                    <span style="background: #fff url(./img/custom-select.png) no-repeat center center;"></span>
+                    <input id="popupplatform" name="item0" maxlength="20" type="text" data-write="0" data-ph="受损平台" placeholder="受损平台">
+                </div>
+                <div class="popup_ins">
+                    <span style="background: #fff url(./img/custom-select.png) no-repeat center center;"></span>
+                    <input id="popupmoney" name="item1" maxlength="12" type="text" data-write="0" data-ph="受损金额" placeholder="受损金额">
+                </div>
+            </div>
+        </form>
+        <ins style="display: block;">
+            <button id="submit" type="button" style="background: #5882ED;height: 35px;
+    width: 90px;
+    line-height: 35px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    border: none;margin-left: 15px;margin-top: 3px;
+">发送</button>
+        </ins>
+    </div>
+</div>
+<script>
+    $('#min').click(function () {
+        if($('#popup').height()===380){
+            $('#popup').css('height',35);
+            $('#popupBottom').hide();
+            $('#min').css('background','transparent url(./img/nodeMax.png) no-repeat')
+        }else{
+            $('#popup').css('height',380);
+            $('#popupBottom').show();
+            $('#min').css('background','transparent url(./img/nodeMin.png) no-repeat')
+        }
+    })
+    $('#submit').click(function () {
+        var a=$.trim($('#popupcontent').val());
+        var b=$.trim($('#popupname').val());
+        var c=$.trim($('#popupphone').val());
+        var d=$.trim($('#popupplatform').val());
+        var e=$.trim($('#popupmoney').val());
+        console.log(a,b,c,d,e);
+        if(!b){
+            alert('请填写姓名');
+            return;
+        }
+        if(!c){
+            alert('请填写手机号');
+            return;
+        }
+        if(!(/^1[0-9]{10}$/.test(c))){
+            alert("手机号码格式有误，请重填");
+            return;
+        }
+        $.ajax({
+            url:'http://localhost:3001/api/customer/addCustomer',
+            type:'post',
+            timeout:10000,
+            dataType:'json',
+            contentType:'application/json',
+            data:JSON.stringify({
+                name:$.trim(b),
+                phone:$.trim(c),
+                content:$.trim(a),
+                platform:$.trim(d),
+                money:$.trim(e),
+            }),
+            success:function (d) {
+                console.log(d)
+                if(d.code==='1'){
+                    alert('提交成功，请耐心等待工作人员联系!')
+                }else{
+                    alert(d.msg)
+                }
+            },
+            fail:function (e) {
+                console.log(e)
+            }
+        })
+    })
+    $.ajax({
+        url:'http://localhost:3001/api/customer/getAllCustomers',
+        type:'post',
+        timeout:10000,
+        dataType:'json',
+        contentType:'application/json',
+        success:function (d) {
+            console.log(d)
+        },
+        fail:function (e) {
+            console.log(e)
+        }
+    })
+</script>
