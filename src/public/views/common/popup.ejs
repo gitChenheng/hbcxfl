@@ -88,7 +88,7 @@
             return;
         }
         $.ajax({
-            url:'http://localhost:3001/api/customer/addCustomer',
+            url:'https://www.denominator.online:9000/api/customer/addCustomer',
             type:'post',
             timeout:10000,
             dataType:'json',
@@ -114,7 +114,7 @@
         })
     })
     $.ajax({
-        url:'http://localhost:3001/api/customer/getAllCustomers',
+        url:'https://www.denominator.online:9000/api/customer/getAllCustomers',
         type:'post',
         timeout:10000,
         dataType:'json',
