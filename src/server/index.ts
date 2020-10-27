@@ -63,8 +63,8 @@ app.use(router.routes()).use(router.allowedMethods());
 
 if (process.env.NODE_ENV === ENV_PROD){
     const options = {
-        key: fs.readFileSync(`${process.cwd()}/src/https/2_www.denominator.online.key`),
-        cert: fs.readFileSync(`${process.cwd()}/src/https/1_www.denominator.online_bundle.crt`)
+        key: fs.readFileSync(`${process.cwd()}/src/https/2_hbcxfl_www.denominator.online.key`),
+        cert: fs.readFileSync(`${process.cwd()}/src/https/1_hbcxfl_www.denominator.online_bundle.crt`)
     };
     const httpsServer = https.createServer(options, app.callback());
     httpsServer.listen(config.node.port, () => {
