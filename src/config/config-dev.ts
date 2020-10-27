@@ -1,7 +1,7 @@
 export default {
     node: {
         host: "127.0.0.1",
-        port: 3001,
+        port: 9000,
     },
     redis: {
         port: 6379,
