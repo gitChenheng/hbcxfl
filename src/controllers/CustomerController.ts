@@ -14,7 +14,6 @@ export default class CustomerController{
     @Post
     public static async getAllCustomers(ctx: Context){
         const body = ctx.request.body;
-        console.log(body);
         if(body.token !== "apmjhiuhwf1341nsuhi8hfwndwsf"){
             ctx.rest(JSONResult.err('token err'));
             return ;
